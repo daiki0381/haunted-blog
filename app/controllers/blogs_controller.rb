@@ -11,6 +11,7 @@ class BlogsController < ApplicationController
 
   def show
     raise ActiveRecord::RecordNotFound if !user_signed_in? && @blog.secret?
+    raise ActiveRecord::RecordNotFound if user_signed_in? && @blog.secret? && @blog.user != current_user
   end
 
   def new
