@@ -40,6 +40,8 @@ class BlogsController < ApplicationController
   end
 
   def destroy
+    raise ActiveRecord::RecordNotFound unless @blog.user == current_user
+
     @blog.destroy!
 
     redirect_to blogs_url, notice: 'Blog was successfully destroyed.', status: :see_other
