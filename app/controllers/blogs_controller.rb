@@ -25,8 +25,6 @@ class BlogsController < ApplicationController
   def create
     @blog = current_user.blogs.new(blog_params)
 
-    raise ActiveRecord::RecordNotFound if !current_user.premium? && @blog.random_eyecatch
-
     if @blog.save
       redirect_to blog_url(@blog), notice: 'Blog was successfully created.'
     else
@@ -60,6 +58,6 @@ class BlogsController < ApplicationController
   end
 
   def blog_params
-    params.require(:blog).permit(:title, :content, :secret, :random_eyecatch)
+    current_user.premium? ? params.require(:blog).permit(:title, :content, :random_eyecatch) : params.require(:blog).permit(:title, :content)
   end
 end
