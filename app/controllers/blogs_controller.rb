@@ -36,7 +36,6 @@ class BlogsController < ApplicationController
     raise ActiveRecord::RecordNotFound unless @blog.user == current_user
 
     if @blog.update(blog_params)
-      @blog.update(random_eyecatch: false) if !current_user.premium? && @blog.random_eyecatch
       redirect_to blog_url(@blog), notice: 'Blog was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
