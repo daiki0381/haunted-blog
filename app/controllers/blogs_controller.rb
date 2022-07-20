@@ -47,7 +47,7 @@ class BlogsController < ApplicationController
 
   def set_blog
     @blog = Blog.published_blog_and_my_secret_blog(current_user).find(params[:id])
-    raise ActiveRecord::RecordNotFound unless @blog.user == current_user
+    current_user.blogs.find(params[:id])
   end
 
   def blog_params
